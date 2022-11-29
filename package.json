@@ -1,6 +1,6 @@
 {
   "name": "roulettebot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "his name is roulette bot",
   "main": "index.js",
   "scripts": {

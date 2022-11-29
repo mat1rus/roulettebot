@@ -12,7 +12,11 @@ module.exports = {
         .addStringOption(opt => opt
             .setName('title')
             .setDescription('New roulette title')
-            .setMaxLength(32)),
+            .setMaxLength(32))
+        .addStringOption(opt => 
+            opt.setName('description')
+                .setDescription('Describe your roulette')
+                .setMaxLength(512)),
     /**
      * @param {Discord.CommandInteraction} intr 
      */
@@ -30,6 +34,7 @@ module.exports = {
                 .setDescription('You do not own this roulette!')]});
         } else {
             if(intr.options.getString('title')) db[intr.options.getString('id')]['title'] = intr.options.getString('title');
+            if(intr.options.getString('description')) db[intr.options.getString('id')]['description'] = intr.options.getString('description');
             fs.writeFileSync('./db.json', JSON.stringify(db));
             await intr.reply({ephemeral: true, embeds: [new Discord.EmbedBuilder()
                 .setColor(65280)

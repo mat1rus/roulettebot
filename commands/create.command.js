@@ -1,5 +1,5 @@
 const Discord = require('discord.js'),
-      fs      = require('fs');
+      fs = require('fs');
 module.exports = {
     data: new Discord.SlashCommandBuilder()
         .setName('create')
@@ -8,20 +8,22 @@ module.exports = {
             opt.setName('id')
                .setDescription('ID to call your roulette')
                .setMaxLength(12)
-               .setRequired(true)
-        )
+               .setRequired(true))
         .addStringOption(opt => 
             opt.setName('title')
                .setDescription('Title of your roulette')
-               .setMaxLength(32)
-        ),
+               .setMaxLength(32))
+        .addStringOption(opt => 
+            opt.setName('description')
+               .setDescription('Describe your roulette')
+               .setMaxLength(512)),
     /**
-     * @param {Discord.CommandInteraction} intr 
+     * @param {Discord.CommandInteraction} intr
      */
     exec: async(intr) => {
         let db = require('../db.json');
         if(!db[intr.options.getString('id')]) {
-            db[intr.options.getString('id')] = {title:intr.options.getString('title')??'Unnamed Roulette',creator:intr.member.id,stc:[]};
+            db[intr.options.getString('id')] = {title:intr.options.getString('title')??'Unnamed Roulette',description:intr.options.getString('description')??'No description provided',creator:intr.member.id,admins:[],stc:[]};
             fs.writeFileSync('./db.json', JSON.stringify(db));
             await intr.reply({ephemeral: true, embeds: [new Discord.EmbedBuilder()
                 .setColor(65280)
