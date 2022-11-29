@@ -1,0 +1,14 @@
+{
+  "name": "roulettebot",
+  "version": "1.0.0",
+  "description": "his name is roulette bot",
+  "main": "index.js",
+  "scripts": {
+    "reg": "node ./npm/reg.js"
+  },
+  "author": "Matrus",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.6.0"
+  }
+}
