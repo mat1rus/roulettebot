@@ -1,7 +1,7 @@
 {
   "name": "roulettebot",
-  "version": "1.0.1",
-  "description": "his name is roulette bot",
+  "version": "1.0.3",
+  "description": "Discord bot that does roulette thing",
   "main": "index.js",
   "scripts": {
     "reg": "node ./npm/reg.js"

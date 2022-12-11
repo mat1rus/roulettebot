@@ -13,7 +13,7 @@ Client.on('interactionCreate', async(intr) => {
     if(intr.isChatInputCommand()) {
         const command = commands[intr.commandName];
         if(!command) return;
-        await command.exec(intr)
+        try{await command.exec(intr)}catch(err){await intr.reply('https://cdn.discordapp.com/attachments/1046926931217616938/1048735655796146330/image.png')};
     };
 });
 Client.login(token);

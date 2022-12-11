@@ -6,10 +6,10 @@ for(file of fs.readdirSync('./commands').filter(f => f.endsWith('.command.js')))
 const rest = new Discord.REST({ version: '10' }).setToken(token);
 (async() => {
 	try {
-		console.log(`Started refreshing ${commands.length} application (/) commands.`);
+		console.log(`${commands.length} commands total`);
 		const data = await rest.put(Discord.Routes.applicationCommands(cId), {body: commands});
-		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
-	} catch (error) {
-		console.error(error);
+		console.log('Done');
+	} catch (err) {
+		console.error(err);
 	};
 })();

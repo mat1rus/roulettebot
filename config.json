@@ -1,4 +1,7 @@
 {
-    "cId": "client id",
-    "token": "token"
+    "cId": "Client ID",
+    "token": "Token",
+    "whitelist": [
+        
+    ]
 }

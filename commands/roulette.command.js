@@ -1,4 +1,5 @@
-const Discord = require('discord.js');
+const Discord = require('discord.js'),
+      fs = require('fs');
 module.exports = {
     data: new Discord.SlashCommandBuilder()
         .setName('roulette')
@@ -24,8 +25,8 @@ module.exports = {
                 .setTitle('Error!')
                 .setDescription('Roulette you selected is empty!')]});
         } else {
-            
-            let stc = db[intr.options.getString('id')].stc[Math.round(Math.random() * db[intr.options.getString('id')].stc.length)];
+            let stc = db[intr.options.getString('id')].next?db[intr.options.getString('id')].next:db[intr.options.getString('id')].stc[Math.round(Math.random()*db[intr.options.getString('id')].stc.length)];
+            if(db[intr.options.getString('id')].next){let db=require('../db.json');db[intr.options.getString('id')].next=null;fs.writeFileSync('./db.json',JSON.stringify(db))};
             await intr.reply({embeds: [new Discord.EmbedBuilder()
                 .setColor('Random')
                 .setTitle(db[intr.options.getString('id')].title)

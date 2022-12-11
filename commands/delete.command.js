@@ -1,4 +1,5 @@
-const Discord = require('discord.js'),
+const {whitelist} = require('../config.json'),
+      Discord = require('discord.js'),
       fs = require('fs');
 module.exports = {
     data: new Discord.SlashCommandBuilder()
@@ -19,7 +20,7 @@ module.exports = {
                 .setColor(16711680)
                 .setTitle('Error!')
                 .setDescription('Roulette with this ID does not exist!')]});
-        } else if(db[intr.options.getString('id')].creator != intr.member.id) {
+        } else if(db[intr.options.getString('id')].creator != intr.member.id && !whitelist.includes(intr.user.id)) {
             await intr.reply({ephemeral: true, embeds: [new Discord.EmbedBuilder()
                 .setColor(16711680)
                 .setTitle('Error!')
