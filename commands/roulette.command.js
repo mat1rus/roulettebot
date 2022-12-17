@@ -8,7 +8,12 @@ module.exports = {
             .setName('id')
             .setDescription('ID of roulette')
             .setMaxLength(12)
-            .setRequired(true)),
+            .setRequired(true))
+        .addNumberOption(opt => opt
+            .setName('rolls')
+            .setDescription('How many rolls bot will do')
+            .setMinValue(1)
+            .setMaxValue(5)),
     /**
      * @param {Discord.CommandInteraction} intr 
      */
@@ -25,12 +30,22 @@ module.exports = {
                 .setTitle('Error!')
                 .setDescription('Roulette you selected is empty!')]});
         } else {
-            let stc = db[intr.options.getString('id')].next?db[intr.options.getString('id')].next:db[intr.options.getString('id')].stc[Math.round(Math.random()*db[intr.options.getString('id')].stc.length)];
-            if(db[intr.options.getString('id')].next){let db=require('../db.json');db[intr.options.getString('id')].next=null;fs.writeFileSync('./db.json',JSON.stringify(db))};
+            let rolls = intr.options.getNumber('rolls')??1,
+                r = [],
+                db = require('../db.json');
+            if(db[intr.options.getString('id')].next) {
+                r.push(db[intr.options.getString('id')].next);
+                db[intr.options.getString('id')].next = null;
+                fs.writeFileSync('./db.json', JSON.stringify(db));
+                rolls -= 1;
+            };
+            for(let i = 0; i < rolls; i++) {
+                r.push(db[intr.options.getString('id')].stc[Math.floor(Math.random()*db[intr.options.getString('id')].stc.length)])
+            };
             await intr.reply({embeds: [new Discord.EmbedBuilder()
                 .setColor('Random')
                 .setTitle(db[intr.options.getString('id')].title)
-                .setDescription(stc)]});
+                .setDescription(r.join('\n'))]});
         };
     }
 };
