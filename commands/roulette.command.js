@@ -31,8 +31,8 @@ module.exports = {
                 .setDescription('Roulette you selected is empty!')]});
         } else {
             let rolls = intr.options.getNumber('rolls')??1,
-                r = [],
-                db = require('../db.json');
+                r = [];
+            db[intr.options.getString('id')].uses += rolls;
             if(db[intr.options.getString('id')].next) {
                 r.push(db[intr.options.getString('id')].next);
                 db[intr.options.getString('id')].next = null;
@@ -40,12 +40,13 @@ module.exports = {
                 rolls -= 1;
             };
             for(let i = 0; i < rolls; i++) {
-                r.push(db[intr.options.getString('id')].stc[Math.floor(Math.random()*db[intr.options.getString('id')].stc.length)])
+                r.push(db[intr.options.getString('id')].stc[Math.floor(Math.random()*db[intr.options.getString('id')].stc.length)]);
             };
             await intr.reply({embeds: [new Discord.EmbedBuilder()
                 .setColor('Random')
                 .setTitle(db[intr.options.getString('id')].title)
                 .setDescription(r.join('\n'))]});
+            fs.writeFileSync('./db.json', JSON.stringify(db));
         };
     }
 };

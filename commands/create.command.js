@@ -23,7 +23,7 @@ module.exports = {
     exec: async(intr) => {
         let db = require('../db.json');
         if(!db[intr.options.getString('id')]) {
-            db[intr.options.getString('id')] = {title:intr.options.getString('title')??'Unnamed Roulette',description:intr.options.getString('description')??'No description provided',creator:intr.member.id,admins:[],stc:[]};
+            db[intr.options.getString('id')] = {title:intr.options.getString('title')??'Unnamed Roulette',description:intr.options.getString('description')??'No description provided',creator:intr.member.id,admins:[],stc:[],next:null,uses:0};
             fs.writeFileSync('./db.json', JSON.stringify(db));
             await intr.reply({ephemeral: true, embeds: [new Discord.EmbedBuilder()
                 .setColor(65280)
